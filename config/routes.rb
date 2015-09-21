@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'category/posts'
+
   root 'home#index'
 
   get 'categories/:id/posts' => 'categorie#posts', as: :posts
