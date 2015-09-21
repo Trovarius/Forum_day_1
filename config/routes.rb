@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get 'categories/:id/posts' => 'categorie#posts', as: :posts
-
+  get 'category/:id/posts' => 'category#posts', as: :posts
+  get 'category/:id/posts/new' => 'category#new', as: :new_post
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

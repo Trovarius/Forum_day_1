@@ -1,2 +1,7 @@
-<h1>Category#posts</h1>
-<p>Find me in app/views/category/posts.html.erb</p>
+<h1><%= @category.name %></h1>
+
+<% @category.posts.each do |p| %>
+  <div>
+    <span> <%= p.title %></span>
+  </div>
+<%end%>
