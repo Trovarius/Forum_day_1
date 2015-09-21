@@ -28,6 +28,11 @@ RSpec.describe CategoryController, type: :controller do
 
       expect(assigns(:post).category).to eq(post.category)
     end
+
+    it "expect to render new template" do
+       get :new, id: @category
+       expect(response).to render_template(:new)
+    end
   end
 
 end
