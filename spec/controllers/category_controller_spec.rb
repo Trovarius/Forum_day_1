@@ -72,12 +72,15 @@ RSpec.describe CategoryController, type: :controller do
 
     context "with valid parameters" do
       it "update a new post" do
-        put :update, id:@category, post_id: @post
+        put :update, id:@category, post_id: @post, post: FactoryGirl.attributes_for(:post)
         expect(assigns(:post)).to eq(@post)
       end
 
       it "changes the post attributes" do
-        put :update, id: @category, post_id: @post
+        put :update, id: @category, post_id: @post, post: FactoryGirl.attributes_for(:post, title: 'ChangeTitle')
+        @post.reload
+
+        expect(@post.title).to eq('ChangeTitle')
       end
     end
   end
