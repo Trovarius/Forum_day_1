@@ -35,4 +35,21 @@ RSpec.describe CategoryController, type: :controller do
     end
   end
 
+  describe "POST #create" do
+    context "valid parameters" do
+      it "create a new post" do
+        expect {
+          post :create, id: @category,  post: {title: 'Teste', category: @category}
+        }.to change{ @category.posts.count }.by(1)
+      end
+
+      it "redirect to post after success inclusion" do
+        post :create, id: @category, post: FactoryGirl.attributes_for(:post)
+
+        expect(response).to redirect_to post_path(assigns[:post])
+      end
+
+    end
+  end
+
 end
