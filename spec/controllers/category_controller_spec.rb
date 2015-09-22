@@ -36,19 +36,49 @@ RSpec.describe CategoryController, type: :controller do
   end
 
   describe "POST #create" do
-    context "valid parameters" do
+    context "with valid parameters" do
       it "create a new post" do
         expect {
-          post :create, id: @category,  post: {title: 'Teste', category: @category}
+          post :create, id: @category,  post: {title: 'Teste'}
         }.to change{ @category.posts.count }.by(1)
       end
 
-      it "redirect to post after success inclusion" do
+      it "redirect to the new post after success inclusion" do
         post :create, id: @category, post: FactoryGirl.attributes_for(:post)
 
-        expect(response).to redirect_to post_path(assigns[:post])
+        expect(response).to redirect_to post_path(@category, assigns[:post])
+      end
+    end
+
+    context "with invalid parameters" do
+      it "does not save the new post" do
+        expect {
+          post :create, id: @category, post: {title: nil}
+        }.to_not change { @category.posts.count }
       end
 
+      it "render new template" do
+        post :create, id: @category, post: {title: nil}
+
+        expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe "PUT #update" do
+    before :each do
+      @post = FactoryGirl.create(:post, category: @category)
+    end
+
+    context "with valid parameters" do
+      it "update a new post" do
+        put :update, id:@category, post_id: @post
+        expect(assigns(:post)).to eq(@post)
+      end
+
+      it "changes the post attributes" do
+        put :update, id: @category, post_id: @post
+      end
     end
   end
 
