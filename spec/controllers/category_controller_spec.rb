@@ -82,6 +82,30 @@ RSpec.describe CategoryController, type: :controller do
 
         expect(@post.title).to eq('ChangeTitle')
       end
+
+      it "should redirect to post" do
+        put :update, id: @category, post_id: @post, post: FactoryGirl.attributes_for(:post)
+
+        expect(response).to redirect_to post_path(@category, @post)
+      end
+    end
+
+    context "with invalid parameters" do
+      it "locate post to change" do
+        put :update, id: @category, post_id: @post, post: FactoryGirl.attributes_for(:post)
+        expect(assigns(:post)).to eq(@post)
+      end
+
+      it "does not change @post attributes" do
+        put :update, id:@category, post_id: @post, post: FactoryGirl.attributes_for(:post, title: nil)
+        expect(@post.title).to_not eq(nil)
+      end
+
+      it "should redirect to edit temaple" do
+        put :update, id:@category, post_id: @post, post: FactoryGirl.attributes_for(:post, title: nil)
+        
+        expect(response).to render_template :edit
+      end
     end
   end
 

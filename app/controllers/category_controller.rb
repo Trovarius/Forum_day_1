@@ -24,12 +24,20 @@ class CategoryController < ApplicationController
     @post = Post.find(params[:post_id])
   end
 
+  def edit
+    @category = Category.find(params[:id])
+    @post = @category.find(params[:post_id])
+  end
+
   def update
     @category = Category.find(params[:id])
     @post = @category.posts.find(params[:post_id])
-    @post.update!(post_params)
+    if @post.update(post_params) 
+      redirect_to post_path(@category, @post)
+    else
+      render :edit
+    end
 
-    redirect_to post_path(@category, @post)
   end
 
   private

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'category/:id/post/create' => 'category#create', as: :create_post
   get 'category/:id/post/:post_id' => 'category#show', as: :post
   put 'category/:id/post/:post_id' => 'category#update', as: :update_post
+  get 'category/:id/post/:post_id/edit' => 'category#edit', as: :edit_post
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
