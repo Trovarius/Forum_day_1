@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pp'
 
 RSpec.describe CategoryController, type: :controller do
 
@@ -38,15 +39,17 @@ RSpec.describe CategoryController, type: :controller do
   describe "POST #create" do
     context "with valid parameters" do
       it "create a new post" do
+        @post = FactoryGirl.attributes_for(:post, comments_attributes:[FactoryGirl.attributes_for(:comment)])
+       
         expect {
-          post :create, id: @category,  post: {title: 'Teste'}
-        }.to change{ @category.posts.count }.by(1)
+          post :create, id: @category,  post: @post
+        }.to change{Post.count}.by(1)
       end
 
       it "redirect to the new post after success inclusion" do
         post :create, id: @category, post: FactoryGirl.attributes_for(:post)
 
-        expect(response).to redirect_to post_path(@category, assigns[:post])
+        expect(response).to redirect_to show_post_path(@category, assigns(:post))
       end
     end
 
@@ -67,7 +70,7 @@ RSpec.describe CategoryController, type: :controller do
 
   describe "PUT #update" do
     before :each do
-      @post = FactoryGirl.create(:post, category: @category)
+      @post = FactoryGirl.create(:post)
     end
 
     context "with valid parameters" do
@@ -77,6 +80,7 @@ RSpec.describe CategoryController, type: :controller do
       end
 
       it "changes the post attributes" do
+
         put :update, id: @category, post_id: @post, post: FactoryGirl.attributes_for(:post, title: 'ChangeTitle')
         @post.reload
 

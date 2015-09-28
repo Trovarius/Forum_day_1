@@ -10,10 +10,11 @@ class CategoryController < ApplicationController
   
   def create
     @category = Category.find(params[:id])
-    @post = Post.new(post_params)
+    @post  = Post.new(post_params)
     @post.category = @category
-    if @post.save 
-      redirect_to post_path(@category, @post)
+    @post.save
+    if @post.save
+      redirect_to show_post_path(@category, @post)
     else
       render 'new'
     end
@@ -43,6 +44,8 @@ class CategoryController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title)
+    params.require(:post).permit(:title, comments_attributes:[:description])
   end
+
+
 end

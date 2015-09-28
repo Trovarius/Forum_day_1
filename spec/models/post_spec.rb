@@ -16,9 +16,21 @@ RSpec.describe Post, type: :model do
 
       it "shoud be unique by category" do
         category = FactoryGirl.create(:category)
-        post1 = FactoryGirl.create(:post, category: category, title: 'a')
+        comment = create(:comment)
+        post1 = FactoryGirl.create(:post, category: category, comments: [comment], title: 'a')
+
         expect(FactoryGirl.build(:post, category: category, title: 'a')).to_not be_valid
 
+      end
+
+    end
+
+    context "comment" do
+      it "has to have at least one" do
+        post = FactoryGirl.build(:post)
+        post.comments.build(FactoryGirl.attributes_for(:comment))
+
+        expect(post).to be_valid
       end
 
     end

@@ -1,14 +1,9 @@
 Rails.application.routes.draw do
-  get 'category/posts'
-
   root 'home#index'
 
-  get 'category/:id/posts' => 'category#posts', as: :posts
-  get 'category/:id/post/new' => 'category#new', as: :new_post
-  post 'category/:id/post/create' => 'category#create', as: :create_post
-  get 'category/:id/post/:post_id' => 'category#show', as: :post
-  put 'category/:id/post/:post_id' => 'category#update', as: :update_post
-  get 'category/:id/post/:post_id/edit' => 'category#edit', as: :edit_post
+  resources :category,only: [:index] do
+    resources :post, only: [:index, :new, :show]
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
