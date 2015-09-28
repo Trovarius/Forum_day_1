@@ -28,12 +28,21 @@ RSpec.describe PostController, type: :controller do
 
   describe "create" do
     context "with valid parameters" do
-      it {
+      it "create post succeefully" do
         expect{
           post :create, category_id: @category,  post: FactoryGirl.attributes_for(:post, comments_attributes: [FactoryGirl.attributes_for(:comment)])
         }.to change(Post, :count).by(1)
-      }
+      end
+
+    it "after indlude redirect to #show" do
+      post :create, category_id: @category, post: FactoryGirl.attributes_for(:post, comments_attributes:[FactoryGirl.attributes_for(:comment)])
+
+      expect(response).to redirect_to category_post_path(@category, assigns(:post))
     end
+
+    end
+
+
   end
 
 end
