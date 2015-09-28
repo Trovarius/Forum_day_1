@@ -46,6 +46,14 @@ RSpec.describe PostController, type: :controller do
     end
 
     end
+
+    context "with  invalid parametrs" do
+      it "does not create a new post" do
+        expect {
+          post :create, category_id: @category, post: FactoryGirl.attributes_for(:post, title:nil, comments_attributes:[FactoryGirl.attributes_for(:comment)])
+        }.to change(Post, :count).by(0)
+      end
+    end
   end
 
   describe "update" do
