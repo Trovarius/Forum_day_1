@@ -23,6 +23,11 @@ RSpec.describe PostController, type: :controller do
       get :show, category_id: @category, id: @post
       expect(assigns(:post).count).to eq(1)
     end
+
+    it "#edit return @post for edit" do
+      get :edit, category_id: @category, id: @post
+      expect(assigns(:post).title).to eq(@post.title)
+    end
     
   end
 
@@ -41,7 +46,9 @@ RSpec.describe PostController, type: :controller do
     end
 
     end
+  end
 
+  describe "update" do
 
   end
 

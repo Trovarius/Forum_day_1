@@ -20,6 +20,10 @@ class PostController < ApplicationController
     end
   end
 
+  def edit
+    @post = Post.where(category_id: params[:category_id], id: params[:id]).first
+  end
+
   private
   def post_params
     params.require(:post).permit(:title, comments_attributes: [:description])
