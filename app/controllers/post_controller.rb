@@ -17,6 +17,8 @@ class PostController < ApplicationController
     @post = @category.posts.build(post_params)
     if @post.save
       redirect_to category_post_path(@post.category, @post)
+    else
+      render 'new'
     end
   end
 

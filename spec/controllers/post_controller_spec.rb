@@ -53,6 +53,11 @@ RSpec.describe PostController, type: :controller do
           post :create, category_id: @category, post: FactoryGirl.attributes_for(:post, title:nil, comments_attributes:[FactoryGirl.attributes_for(:comment)])
         }.to change(Post, :count).by(0)
       end
+
+      it "redirect to #new" do
+        post :create, category_id: @category,  post: FactoryGirl.attributes_for(:post, title:nil, comments_attributes: [FactoryGirl.attributes_for(:comment)])
+        expect(response).to render_template(:new)
+      end
     end
   end
 
