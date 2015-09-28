@@ -26,4 +26,14 @@ RSpec.describe PostController, type: :controller do
     
   end
 
+  describe "create" do
+    context "with valid parameters" do
+      it {
+        expect{
+          post :create, category_id: @category,  post: FactoryGirl.attributes_for(:post, comments_attributes: [FactoryGirl.attributes_for(:comment)])
+        }.to change(Post, :count).by(1)
+      }
+    end
+  end
+
 end

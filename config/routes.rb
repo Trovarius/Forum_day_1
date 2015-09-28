@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :category,only: [:index] do
-    resources :post, only: [:index, :new, :show]
+    resources :post, only: [:index, :new, :show, :create]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

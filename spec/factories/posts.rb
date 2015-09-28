@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :post do
-    title "MyString"
+    title {Faker::Name.first_name}
     association :category
     comments { [create(:comment)] }
   end
