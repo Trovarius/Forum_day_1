@@ -55,5 +55,22 @@ RSpec.describe Post, type: :model do
       expect(post.title).to_not eq(title)
       
     end
+
+    it "fails when title is nil" do
+      post = FactoryGirl.create(:post)
+      title = post.title
+      post.update_attributes(title: nil)
+      expect(post).to_not be_valid
+    end
+
+    it "just titles keeping comments the same" do
+      post = create(:post)
+      comments_count = post.comments.count
+      description = post.comments.first.description
+      post.update_attributes(FactoryGirl.attributes_for(:post))
+      expect(post.comments.first.description).to eq(description)
+
+      expect(post.comments.count).to eq(comments_count)
+    end
   end
 end
