@@ -42,7 +42,18 @@ RSpec.describe Post, type: :model do
         FactoryGirl.build(:post, comments_attributes:[FactoryGirl.attributes_for(:comment)])
       }.to change(Comment, :count).by(1)
 
-      #expect(@post.comments.count).to eq(1)
+    end
+  end
+
+  describe "update" do
+    it "title" do
+      post = FactoryGirl.create(:post)
+      title = post.title
+      
+      post.update_attributes(title: "NewTitle")
+
+      expect(post.title).to_not eq(title)
+      
     end
   end
 end
