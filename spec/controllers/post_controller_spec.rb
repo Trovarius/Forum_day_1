@@ -33,7 +33,7 @@ RSpec.describe PostController, type: :controller do
 
   describe "create" do
     context "with valid parameters" do
-      it "create post succeefully" do
+      it "create post succeessfully" do
         expect{
           post :create, category_id: @category,  post: FactoryGirl.attributes_for(:post, comments_attributes: [FactoryGirl.attributes_for(:comment)])
         }.to change(Post, :count).by(1)
@@ -62,7 +62,14 @@ RSpec.describe PostController, type: :controller do
   end
 
   describe "update" do
+    context "with valid parameters" do
+      it "update successfully" do
 
+          put :update, category_id: @category, id: @post, post: FactoryGirl.attributes_for(:post, title: "NewTitle")
+          @post.reload
+          expect(@post.title).to eq("NewTitle")
+      end
+    end
   end
 
 end

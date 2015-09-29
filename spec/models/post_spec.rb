@@ -32,7 +32,17 @@ RSpec.describe Post, type: :model do
 
         expect(post).to be_valid
       end
+    end
+  end
 
+  describe "create" do
+    it "with nested comments" do
+
+      expect{
+        FactoryGirl.build(:post, comments_attributes:[FactoryGirl.attributes_for(:comment)])
+      }.to change(Comment, :count).by(1)
+
+      #expect(@post.comments.count).to eq(1)
     end
   end
 end

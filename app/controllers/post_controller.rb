@@ -26,8 +26,18 @@ class PostController < ApplicationController
     @post = Post.where(category_id: params[:category_id], id: params[:id]).first
   end
 
+  def update
+    @post = Post.where(category_id: params[:category_id], id: params[:id]).first
+
+    @post.update_attributes!(post_params)
+  end
+
   private
   def post_params
-    params.require(:post).permit(:title, comments_attributes: [:description])
+    if @post 
+      params.require(:post).permit(:title)
+    else
+      params.require(:post).permit(:title, comments_attributes: [:description])
+    end
   end
 end
